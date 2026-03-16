@@ -17,8 +17,6 @@ tj_network_analysis_pipeline.ipynb  (Google Colab)
 _tj_measurements.csv and segmentation overlay (output) 
 ```
 
-![Pipeline overview]!(TJ Network Pipeline Diagram.png)
-
 ---
 
 ## Requirements
@@ -102,9 +100,9 @@ Upload your stitched `.tif` when prompted. The notebook will:
 
 ## CSV Output Format
 
-**Summary block:**
+**Summary Block:**
 
-| Column | Description |
+| Coloumn | Description |
 |---|---|
 | Total_Objects | Total TJ regions detected |
 | Avg/Std_Area_Pixels | Mean and SD of region area in pixels |
