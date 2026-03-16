@@ -1,8 +1,7 @@
 // ============================================
 // CONFIGURATION
 // ============================================
-//rootDir = "E:\\Isha\\Ready to Stitch\\250331_161908_K14 20X PL FL Phase\\";  // Root folder
-rootDir = "C:\\Users\\AlpaughLab\\Desktop\\Tool\\Data\\P15 Images\\250329_142249_B11 20X PL FL Phase\\"
+rootDir = " " 
 
 channel = "GFP";                    // Channel to process
 positions = 15;                      // Number of positions
@@ -28,7 +27,7 @@ for (p = 1; p <= positions; p++) {
     posDir = rootDir + channel + "\\" + posName + "\\";
     list = getFileList(posDir);
     if (list.length == 0) {
-        print("⚠️ No files found in " + posDir);
+        print(" No files found in " + posDir);
         continue;
     }
 
@@ -45,7 +44,7 @@ for (p = 1; p <= positions; p++) {
     tilePath = outputDir + "P" + p + "_" + channel + "_stack.tif";
     saveAs("Tiff", tilePath);
     close();
-    print("✅ Saved 8-bit stack for position " + p);
+    print("Saved 8-bit stack for position " + p);
 }
 
 // ============================================
@@ -68,7 +67,7 @@ for (i = 0; i < positions; i++) {
 }
 
 File.close(f);
-print("✅ TileConfiguration.txt created at: " + tileConfig);
+print("TileConfiguration.txt created at: " + tileConfig);
 
 // ============================================
 // STEP 4 — Run 3D stitching with automatic overlap
@@ -94,21 +93,21 @@ wait(5000);
 if (nImages > 0) {
     stitchedPath = outputDir + "Stitched_" + channel + "_3D.tif";
     saveAs("Tiff", stitchedPath);
-    print("✅ Stitched 3D image saved at: " + stitchedPath);
+    print("Stitched 3D image saved at: " + stitchedPath);
 
     srcConfig = outputDir + "TileConfiguration.registered.txt";
     dstConfig = outputDir + "TileConfiguration_refined_" + channel + ".txt";
     if (File.exists(srcConfig)) {
         File.copy(srcConfig, dstConfig);
-        print("✅ Refined TileConfiguration saved at: " + dstConfig);
+        print("Refined TileConfiguration saved at: " + dstConfig);
     } else {
-        print("⚠️ No registered TileConfiguration found.");
+        print("No registered TileConfiguration found.");
     }
 } else {
-    print("⚠️ No stitched image open to save.");
+    print("No stitched image open to save.");
 }
 
-print("🎉 Channel stitching completed!");
+print("Channel stitching completed!");
 
 // ============================================
 // STEP 6 — Optional slice trimming
@@ -116,7 +115,7 @@ print("🎉 Channel stitching completed!");
 totalSlices = nSlices;
 print("Total slices in stitched stack: " + totalSlices);
 
-print("⏳ Review the stack now — trim dialog will appear in 45 seconds...");
+print("Review the stack now — trim dialog will appear in 45 seconds...");
 for (i = 45; i > 0; i--) {
     if (i == 1) {
         showStatus("Trim dialog opening in 1 second — scroll the stack now!");
@@ -137,14 +136,14 @@ if (doTrim) {
     lastKeep  = totalSlices - trimEnd;
 
     if (firstKeep > lastKeep) {
-        print("⚠️ Invalid trim range — no slices would remain. Skipping trim.");
+        print("Invalid trim range — no slices would remain. Skipping trim.");
     } else if (trimStart == 0 && trimEnd == 0) {
-        print("ℹ️ No slices trimmed.");
+        print("No slices trimmed.");
     } else {
         run("Make Substack...", "slices=" + firstKeep + "-" + lastKeep);
         trimmedTitle = "Stitched_" + channel + "_3D_trimmed.tif";
         saveAs("Tiff", outputDir + trimmedTitle);
-        print("✅ Trimmed stack saved (" + trimStart + " from start, " + trimEnd + " from end)");
-        print("   Kept slices " + firstKeep + " to " + lastKeep + " → " + (lastKeep - firstKeep + 1) + " slices total");
+        print("Trimmed stack saved (" + trimStart + " from start, " + trimEnd + " from end)");
+        print("Kept slices " + firstKeep + " to " + lastKeep + " → " + (lastKeep - firstKeep + 1) + " slices total");
     }
 }
