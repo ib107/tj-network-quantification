@@ -16,7 +16,7 @@ tj_network_analysis_pipeline.ipynb  (Google Colab)
        ↓
 _tj_measurements.csv and segmentation overlay (output) 
 ```
-
+![Pipeline overview](tj_network_pipeline.png)
 ---
 
 ## Requirements
