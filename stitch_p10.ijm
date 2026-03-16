@@ -1,20 +1,19 @@
-// P10 Stitching
-
 // ============================================
 // CONFIGURATION
 // ============================================
-//rootDir = "E:\\Isha\\Ready to Stitch\\250331_200112_K2 20X PL FL Phase\\";
-rootDir = "C:\\Users\\AlpaughLab\\Desktop\\Tool\\Data\\P10 Images\\250331_191651_H23 20X PL FL Phase\\"
+rootDir = " "
 channel = "CY5";
 positions = 10;
 cols = 5;
 approxOverlap = 0.08;   // coarse estimate only
 outputDir = rootDir + "Channel_Only_" + channel + "\\";
+
 // ============================================
 // STEP 1 — Prepare output folder
 // ============================================
 File.makeDirectory(outputDir);
 print("Output directory: " + outputDir);
+
 // ============================================
 // STEP 2 — Process each position (8-bit stacks)
 // ============================================
@@ -24,7 +23,7 @@ for (p = 1; p <= positions; p++) {
     posDir = rootDir + channel + "\\P" + p + "\\";
     list = getFileList(posDir);
     if (list.length == 0) {
-        print("⚠️ No files in " + posDir);
+        print("No files in " + posDir);
         continue;
     }
     run("Image Sequence...", "open=[" + posDir + "] sort");
@@ -37,6 +36,7 @@ for (p = 1; p <= positions; p++) {
     saveAs("Tiff", outputDir + "P" + p + "_" + channel + "_stack.tif");
     close();
 }
+
 // ============================================
 // STEP 3 — Generate COARSE TileConfiguration
 // ============================================
@@ -54,7 +54,8 @@ for (i = 0; i < positions; i++) {
     print(f, fileName + ";0;(" + x + "," + y + ",0)");
 }
 File.close(f);
-print("✅ Coarse TileConfiguration written");
+print("Coarse TileConfiguration written");
+
 // ============================================
 // STEP 4 — Robust pixel-based stitching
 // ============================================
@@ -69,12 +70,13 @@ run("Grid/Collection stitching",
     "max/avg_displacement_threshold=2.50 " +
     "absolute_displacement_threshold=3.50 " +
     "image_output=[Fuse and display]");
+
 // ============================================
 // STEP 5 — Save outputs
 // ============================================
 if (nImages > 0) {
     saveAs("Tiff", outputDir + "Stitched_" + channel + "_3D.tif");
-    print("✅ Stitched image saved");
+    print("Stitched image saved");
     if (File.exists(outputDir + "TileConfiguration.registered.txt")) {
         File.copy(
             outputDir + "TileConfiguration.registered.txt",
@@ -90,7 +92,7 @@ totalSlices = nSlices;
 print("Total slices in stitched stack: " + totalSlices);
 
 // Give the user time to scroll through the stack before the dialog appears
-print("⏳ Review the stack now — trim dialog will appear in 30 seconds...");
+print("Review the stack now — trim dialog will appear in 30 seconds...");
 for (i = 40; i > 0; i--) {
     if (i == 1) {
         showStatus("Trim dialog opening in 1 second — scroll the stack now!");
@@ -110,14 +112,14 @@ if (doTrim) {
     lastKeep  = totalSlices - trimEnd;
 
     if (firstKeep > lastKeep) {
-        print("⚠️ Invalid trim range — no slices would remain. Skipping trim.");
+        print("Invalid trim range — no slices would remain. Skipping trim.");
     } else if (trimStart == 0 && trimEnd == 0) {
-        print("ℹ️ No slices trimmed.");
+        print("No slices trimmed.");
     } else {
         run("Make Substack...", "slices=" + firstKeep + "-" + lastKeep);
         trimmedTitle = "Stitched_" + channel + "_3D_trimmed.tif";
         saveAs("Tiff", outputDir + trimmedTitle);
-        print("✅ Trimmed stack saved (" + trimStart + " from start, " + trimEnd + " from end)");
-        print("   Kept slices " + firstKeep + " to " + lastKeep + " → " + (lastKeep - firstKeep + 1) + " slices total");
+        print("Trimmed stack saved (" + trimStart + " from start, " + trimEnd + " from end)");
+        print("Kept slices " + firstKeep + " to " + lastKeep + " → " + (lastKeep - firstKeep + 1) + " slices total");
     }
 }
