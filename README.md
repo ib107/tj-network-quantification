@@ -22,11 +22,11 @@ _tj_measurements.csv and segmentation overlay (output)
 ## Requirements
 
 **ImageJ / Fiji**
-- Fiji with the Grid/Collection Stitching plugin (bundled by default)
+- [Fiji](https://fiji.sc/) with the Grid/Collection Stitching plugin (bundled by default)
 
 **Google Colab**
 - T4 GPU runtime recommended
-- Dependencies installed automatically by the notebook:
+- Dependencies installed automatically in the notebook:
   - `cellpose`
   - `scikit-image`
   - `matplotlib`
