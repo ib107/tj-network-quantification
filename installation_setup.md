@@ -81,11 +81,11 @@ For exact reproduction of the development environment:
 ```bash
 conda env create -f environment.yml
 conda activate bbb_py12
----
+```
 
 ### Launch the notebook
 
-```bash
+```bash 
 jupyter notebook TJ_Quantification.ipynb
 ```
 
@@ -136,17 +136,3 @@ ExperimentFolder/
 * Single `.tif` file (2D or 3D)
 * Recommended: stitched CY5 channel
 * Grayscale only (no RGB)
-
----
-
-## Expected Runtime
-
-| Stage                   | Estimated Time |
-| ----------------------- | -------------- |
-| Organization            | < 1 min        |
-| Stitching (10–15 tiles) | 5–20 min       |
-| Preprocessing           | 1–5 min        |
-| Cellpose (GPU)          | 1–3 min        |
-| Cellpose (CPU)          | 10–30 min      |
-
-> Large images (>5000 px) may require cropping for performance.
