@@ -147,7 +147,7 @@ Both macros:
 
 ### Stage 3 — Preprocessing (Fiji)
 
-Run `preprocess_single_image_stack_safe.ijm` with your stitched image open in Fiji. It applies the following operations slice-by-slice across the full stack:
+Run `preprocess_stack.ijm` with your stitched image open in Fiji. It applies the following operations slice-by-slice across the full stack:
 
 1. Rolling ball background subtraction (radius = 15)
 2. Median filter (radius = 5)
