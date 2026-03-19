@@ -1,7 +1,7 @@
 # Tight Junction Quantification Pipeline
 ### Cellpose-based pipeline for 3D Blood-Brain Barrier Confocal Images
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oJCZdz_nOnk5cngrT1Jvl_kRdgeY15Ld#scrollTo=sa_3Vg3NsaQC)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1AplvHG9f1uxdad4INGDMDY_skHbtLzMM/view?usp=sharing)
 
 > **Paper:** *Modeling the Blood-Brain Barrier: A Three-Dimensional Multicellular Microfluidic Approach with Bioinformatics*
 
@@ -11,7 +11,7 @@
 
 This pipeline processes 3D confocal microscopy blood-brain barrier (BBB) images through four sequential stages: image organization in Fiji, tile stitching in Fiji, preprocessing in Fiji, and automated segmentation and quantification in Python.
 
-<!-- Add pipeline diagram here -->
+(tj_network_pipeline.png)
 
 ---
 
@@ -72,8 +72,8 @@ No local installation needed. Click the Colab badge above, then:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-org/your-repo.git
-cd your-repo
+git clone https://github.com/ib107/tj-network-quantification
+cd scripts
 
 # 2. Create and activate a virtual environment
 python -m venv venv
