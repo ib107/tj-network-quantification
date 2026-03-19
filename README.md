@@ -11,7 +11,7 @@
 
 This pipeline processes 3D confocal microscopy blood-brain barrier (BBB) images through four sequential stages: image organization in Fiji, tile stitching in Fiji, preprocessing in Fiji, and automated segmentation and quantification in Python.
 
-(tj_network_pipeline.png)
+![](tj_network_pipeline.png)
 
 ---
 
