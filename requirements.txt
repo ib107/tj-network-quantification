@@ -1,0 +1,36 @@
+# ── Python Requirements ─────────────────────────────────────
+# Tight Junction Quantification Pipeline
+# Python >= 3.8 recommended
+# Install via: pip install -r requirements.txt
+
+# ── Deep learning & Segmentation ────────────────────────────
+cellpose>=2.2.0
+torch>=1.13.0            # Install GPU build separately if desired (see below)
+
+# ── Image Processing ────────────────────────────────────────
+scikit-image>=0.19.0
+tifffile>=2023.0.0
+opencv-python-headless>=4.8.0
+
+# ── Data Handling & Visualization ───────────────────────────
+numpy>=1.23.0
+pandas>=1.5.0
+matplotlib>=3.5.0
+
+# ── Utilities ───────────────────────────────────────────────
+natsort>=8.0.0
+tqdm>=4.60.0
+
+# ── Optional (Advanced Segmentation / Extensions) ───────────
+# segment-anything
+# roifile
+# imagecodecs
+
+# ── Notes ───────────────────────────────────────────────────
+# 1. For GPU acceleration, install the CUDA-compatible PyTorch build FIRST:
+#    https://pytorch.org/get-started/locally/
+#
+# 2. Then run:
+#    pip install -r requirements.txt
+#
+# 3. Cellpose will automatically detect GPU via torch.cuda.is_available()

@@ -1,0 +1,28 @@
+name: bbb_py12
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scikit-image
+  - scipy
+  - matplotlib
+  - tifffile
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip
+
+  - pip:
+      - pyimagej
+      - opencv-python-headless
+      - cellpose
+      - segment-anything
+      - natsort
+      - tqdm
+      - roifile
+      - imagecodecs
