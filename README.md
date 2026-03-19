@@ -160,7 +160,7 @@ The processed stack is saved as `<original_name>_preprocessed.tif` in the same d
 
 ### Stage 4 — Segmentation & Quantification (Python / Google Colab)
 
-Open `tj_network_analysis_pipeline.ipynb` in Google Colab with a T4 GPU runtime.
+Open `TJ_Quantification.ipynb` in Google Colab with a T4 GPU runtime, or open `TJ_Quantification.py` locally. 
 
 **Key parameters** (set in the Configuration cell at the top of the notebook):
 
