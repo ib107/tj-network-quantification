@@ -4,15 +4,18 @@
 # ============================================================
 #
 # USAGE:
-#   python tj_segmentation.py --input path/to/image.tif
-#   python tj_segmentation.py --input path/to/image.tif --output ./results
+#   python TJ_Segmentation.py                                     ← GUI popup
+#   python TJ_Segmentation.py --input path/to/image.tif           ← arg (no popup)
+#   python TJ_Segmentation.py --input path/to/image.tif --output ./results
 #
 # INSTALL DEPENDENCIES:
 #   pip install cellpose scikit-image matplotlib pandas torch
+#   (tkinter is built into Python — no install needed)
 # ============================================================
 
 # ── 0. IMPORTS ──────────────────────────────────────────────
 import os
+import sys
 import argparse
 import numpy as np
 import torch
@@ -29,6 +32,61 @@ Z_INDEX               = 0      # which Z slice to use if image is 3D
 CELLPOSE_DIAMETER     = None   # None = auto-detect cell diameter
 NOISE_MAX_AREA_PX     = 300    # objects above this size are never removed by shape
 NOISE_MIN_CIRCULARITY = 0.80   # circularity score (0–1); 1 = perfect circle
+
+
+def prompt_gui() -> tuple[str, str]:
+    """
+    Open tkinter dialogs to pick an input file and output folder.
+    Returns (input_path, output_dir).
+    Exits cleanly if the user cancels either dialog.
+    """
+    try:
+        import tkinter as tk
+        from tkinter import filedialog, messagebox
+    except ImportError:
+        print("ERROR: tkinter is not available. Please pass --input / --output as arguments instead.")
+        sys.exit(1)
+
+    # Hide the root window — we only want the dialogs
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)   # bring dialog to front
+
+    # ── Input file ──────────────────────────────────────────
+    messagebox.showinfo(
+        "TJ Segmentation — Step 1 of 2",
+        "Select the input image file (.tif, .png, etc.)",
+        parent=root,
+    )
+    input_path = filedialog.askopenfilename(
+        title="Select input image",
+        filetypes=[
+            ("Image files", "*.tif *.tiff *.png *.jpg *.jpeg *.bmp"),
+            ("All files",   "*.*"),
+        ],
+        parent=root,
+    )
+    if not input_path:
+        print("No input file selected. Exiting.")
+        sys.exit(0)
+
+    # ── Output folder ────────────────────────────────────────
+    messagebox.showinfo(
+        "TJ Segmentation — Step 2 of 2",
+        "Select (or create) the output folder where results will be saved.",
+        parent=root,
+    )
+    output_dir = filedialog.askdirectory(
+        title="Select output folder",
+        parent=root,
+    )
+    if not output_dir:
+        # Fall back to a default next to the input file
+        output_dir = os.path.join(os.path.dirname(input_path), "tj_results")
+        print(f"No output folder selected — using default: {output_dir}")
+
+    root.destroy()
+    return input_path, output_dir
 
 
 def run_pipeline(input_path: str, output_dir: str) -> None:
@@ -216,21 +274,47 @@ def run_pipeline(input_path: str, output_dir: str) -> None:
 # ── ENTRY POINT ─────────────────────────────────────────────
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Tight Junction segmentation pipeline (Cellpose-based)"
+        description="Tight Junction segmentation pipeline (Cellpose-based). "
+                    "Run without arguments to use the file-picker GUI."
     )
     parser.add_argument(
         "--input", "-i",
-        required=True,
-        help="Path to input image file (.tif, .png, etc.)"
+        default=None,
+        help="Path to input image file (.tif, .png, etc.). "
+             "Omit to open a file-picker dialog."
     )
     parser.add_argument(
         "--output", "-o",
-        default="./tj_results",
-        help="Directory to save all outputs (default: ./tj_results)"
+        default=None,
+        help="Directory to save all outputs. "
+             "Omit to open a folder-picker dialog (default: ./tj_results)."
     )
     args = parser.parse_args()
 
-    if not os.path.isfile(args.input):
-        raise FileNotFoundError(f"Input file not found: {args.input}")
+    # ── Resolve input / output ───────────────────────────────
+    # Rule:
+    #   --input provided  → use it, skip input dialog
+    #   --input missing   → open GUI to pick input (and output) folder
+    #   --output provided → always use it (even in GUI mode, skips folder dialog)
+    #   --output missing  → GUI mode picks folder; arg mode defaults to ./tj_results
 
-    run_pipeline(input_path=args.input, output_dir=args.output)
+    if args.input is None:
+        # No args at all → full GUI flow
+        print("No --input argument detected — launching file-picker GUI…")
+        input_path, output_dir = prompt_gui()
+
+        # If the user DID supply --output on the CLI, honour it over the dialog
+        if args.output is not None:
+            output_dir = args.output
+    else:
+        # At least --input was supplied → pure arg mode, no popups
+        input_path = args.input
+        output_dir = args.output if args.output is not None else "./tj_results"
+
+    if not os.path.isfile(input_path):
+        raise FileNotFoundError(f"Input file not found: {input_path}")
+
+    print(f"Input  : {input_path}")
+    print(f"Output : {output_dir}")
+
+    run_pipeline(input_path=input_path, output_dir=output_dir)
