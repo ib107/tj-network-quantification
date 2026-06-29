@@ -1,9 +1,21 @@
 # Tight Junction Quantification Pipeline
 ### Cellpose-based pipeline for 3D Blood-Brain Barrier Confocal Images
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1AplvHG9f1uxdad4INGDMDY_skHbtLzMM/view?usp=sharing)
-
 > **Paper:** *Modeling the Blood-Brain Barrier: A Three-Dimensional Multicellular Microfluidic Approach with Bioinformatics*
+
+Two options are available in Google Colab depending on your needs:
+
+### Interactive Tutorial (Google Colab)
+
+For users who would like a guided walkthrough of the pipeline, an interactive Google Colab tutorial is provided. The notebook demonstrates the complete workflow, including image loading, Cellpose-based segmentation, filtering steps, morphometric feature extraction, and visualization of outputs.
+
+[![Open In Colab](https://colab.research.google.com/drive/1-12Mob7lVqnfg0bClo8H9HsrEJEdJsaa#scrollTo=pipeline_md)](https://drive.google.com/file/d/1AplvHG9f1uxdad4INGDMDY_skHbtLzMM/view?usp=sharing)
+
+### Ready-to-Run Pipeline (Google Colab) 
+
+For users who wish to apply the pipeline directly to their own confocal images, and are familiar with the workflow.  
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1AplvHG9f1uxdad4INGDMDY_skHbtLzMM/view?usp=sharing)
 
 ---
 
